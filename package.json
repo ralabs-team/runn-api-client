@@ -1,0 +1,25 @@
+{
+  "name": "runn-api-client",
+  "description": "API integration with Runn.io",
+  "author": "Ralabs <ralabs.org>",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ralabs-team/runn-api-client.git"
+  },
+  "keywords": [
+    "api",
+    "runn",
+    "runn.io",
+    "rest"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ralabs-team/runn-api-client/issues"
+  },
+  "homepage": "https://github.com/ralabs-team/runn-api-client#readme"
+}
