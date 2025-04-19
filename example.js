@@ -17,6 +17,8 @@ const RUNN_API_KEY = 'TEST_test_...';
   const people = await runnApi.people.fetchAll();
   console.log('people', people.length); // eslint-disable-line no-console
 
+  runnApi.projects.fetchAll()
+
   // create new client
-  await runnApi.clients.create('Test Client', []);
+  // await runnApi.clients.create('Test Client', []);
 })();
