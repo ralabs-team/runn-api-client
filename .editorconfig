@@ -1,0 +1,44 @@
+# Root .editorconfig file
+# Indicates this is the root configuration file
+root = true
+
+# Default settings for all files
+[*]
+indent_style = space    # Use spaces for indentation
+indent_size = 4         # Set indentation size to 4 spaces
+charset = utf-8         # Use UTF-8 encoding
+trim_trailing_whitespace = true  # Remove trailing whitespace
+insert_final_newline = true      # Ensure a newline at the end of files
+
+# Specific rules for Markdown files
+[*.md]
+trim_trailing_whitespace = false  # Allow trailing whitespace for Markdown
+
+# Specific rules for JSON files
+[*.json]
+indent_style = space
+indent_size = 2                   # JSON typically uses 2 spaces
+
+# Specific rules for YAML files
+[*.yml]
+indent_style = space
+indent_size = 2
+
+# Specific rules for JavaScript and TypeScript files
+[*.{js,ts}]
+indent_style = space
+indent_size = 2
+
+# Specific rules for Python files
+[*.py]
+indent_style = space
+indent_size = 4
+
+# Specific rules for HTML and CSS files
+[*.{html,css,scss}]
+indent_style = space
+indent_size = 2
+
+# Specific rules for Makefiles
+[Makefile]
+indent_style = tab  # Makefiles require tabs for indentation
