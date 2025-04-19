@@ -1,9 +1,9 @@
-const runnApiClient = require('runn-api-client');
+const RunnApiClient = require('runn-api-client');
 
 const RUNN_API_KEY = 'TEST_test_...';
 
 (async () => {
-  const runnApi = new runnApiClient(RUNN_API_KEY, { logLevel: 'debug', isDryRun: false });
+  const runnApi = new RunnApiClient(RUNN_API_KEY, { logLevel: 'debug', isDryRun: false });
 
   // fetch all clients
   const clients = await runnApi.clients.fetchAll();
