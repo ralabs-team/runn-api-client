@@ -82,6 +82,11 @@ class RunnApiClient {
       } catch (err) {
         const statusCode = err?.response?.status;
 
+        if (statusCode == 401) {
+          this.logger.log('error', 'Unauthorized, incorrect API key');
+          throw new Error('Unauthorized, incorrect API key');
+        }
+
         // response error on Runn API side
         if (statusCode >= 500 && statusCode < 600) {
           this.logger.log('error', `Runn API respond ${statusCode} error`);
