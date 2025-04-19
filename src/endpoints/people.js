@@ -1,12 +1,12 @@
 class RunnApiPeople {
-  constructor(client) {
-    this.client = client;
+  constructor(runnApi) {
+    this.runnApi = runnApi;
   }
 
   // fetches the list of people from the Runn API
   // https://developer.runn.io/reference/get_people
   async fetchAll() {
-    const values = await this.client.executeRunnApiGET('/people', { urlParams: { includePlaceholders: true, limit: 200 } });
+    const values = await this.runnApi.executeRunnApiGET('/people', { urlParams: { includePlaceholders: true, limit: 200 } });
 
     /*
       {
@@ -33,7 +33,7 @@ class RunnApiPeople {
       }
     */
 
-    this.client.logger.log('debug', `Runn > People > fetched ${values.length} people`);
+    this.runnApi.logger.log('debug', `Runn > People > fetched ${values.length} people`);
 
     return values;
   }
@@ -41,7 +41,7 @@ class RunnApiPeople {
   // fetches specific person
   // https://developer.runn.io/reference/get_people-personid
   async fetchOne(personId) {
-    const values = await this.client.executeRunnApiGET(`/people/${personId}`, {
+    const values = await this.runnApi.executeRunnApiGET(`/people/${personId}`, {
       parseResponseFn: (data) => data,
     });
 
@@ -118,7 +118,7 @@ class RunnApiPeople {
       }
     */
 
-    this.client.logger.log('debug', `Runn > People > fetched person id=${personId}`);
+    this.runnApi.logger.log('debug', `Runn > People > fetched person id=${personId}`);
 
     return values[0];
   }
@@ -127,16 +127,16 @@ class RunnApiPeople {
   // https://developer.runn.io/reference/post_people
   // required: firstName, lastName, roleId
   async create(firstName, lastName, roleId, otherValues = {}) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', 'Runn > People > (dry-run) created person with name=["..."] and id=["..."]');
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', 'Runn > People > (dry-run) created person with name=["..."] and id=["..."]');
       return {};
     }
 
-    const response = await this.client.executeRunnApiPOST('/people', {
+    const response = await this.runnApi.executeRunnApiPOST('/people', {
       firstName,
       lastName,
       // if role is passed as string, then resolve it to id
-      roleId: await this.roles.getRoleId(roleId),
+      roleId: await this.runnApi.roles.getRoleId(roleId),
       ...otherValues,
     });
 
@@ -163,7 +163,7 @@ class RunnApiPeople {
       }
     */
 
-    this.client.logger.log(
+    this.runnApi.logger.log(
       'debug',
       `Runn > People > created person with name=["${response.firstName} ${response.lastName}"] and id=["${response.id}"]`,
     );
@@ -174,15 +174,15 @@ class RunnApiPeople {
   // update person
   // https://developer.runn.io/reference/patch_people-personid
   async update(personId, newValues) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log(
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log(
         'debug',
         `Runn > People > (dry-run) updated person with id=["${personId}"] to values=[${JSON.stringify(newValues)}]`,
       );
       return {};
     }
 
-    const response = await this.client.executeRunnApiPATCH(`/people/${personId}`, newValues);
+    const response = await this.runnApi.executeRunnApiPATCH(`/people/${personId}`, newValues);
 
     /*
       {
@@ -202,7 +202,7 @@ class RunnApiPeople {
       }
     */
 
-    this.client.logger.log('debug', `Runn > People > updated person with id=["${response.id}"] to values=[${JSON.stringify(newValues)}]`);
+    this.runnApi.logger.log('debug', `Runn > People > updated person with id=["${response.id}"] to values=[${JSON.stringify(newValues)}]`);
 
     return response;
   }
@@ -210,9 +210,9 @@ class RunnApiPeople {
   // fetches all contracts assigned on person
   // https://developer.runn.io/reference/get_people-personid-contracts
   async fetchContracts(personId) {
-    const values = await this.client.executeRunnApiGET(`/people/${personId}/contracts`, { urlParams: { limit: 500 } });
+    const values = await this.runnApi.executeRunnApiGET(`/people/${personId}/contracts`, { urlParams: { limit: 500 } });
 
-    this.client.logger.log('debug', `Runn > People > fetched ${values.length} contracts for person id=${personId}`);
+    this.runnApi.logger.log('debug', `Runn > People > fetched ${values.length} contracts for person id=${personId}`);
 
     return values;
   }
@@ -220,17 +220,17 @@ class RunnApiPeople {
   // add new contract to specific person
   // https://developer.runn.io/reference/post_people-personid-contracts
   async addContract(personId, roleId, options = {}) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', `Runn > People > (dry-run) added contract for person id=${personId} with role id=${roleId}`);
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > People > (dry-run) added contract for person id=${personId} with role id=${roleId}`);
       return {};
     }
 
-    const response = await this.client.executeRunnApiPOST(`/people/${personId}/contracts`, {
+    const response = await this.runnApi.executeRunnApiPOST(`/people/${personId}/contracts`, {
       roleId,
       ...options,
     });
 
-    this.client.logger.log('debug', `Runn > People > added contract for person id=${personId} with role id=${roleId}`);
+    this.runnApi.logger.log('debug', `Runn > People > added contract for person id=${personId} with role id=${roleId}`);
 
     return response;
   }
@@ -238,9 +238,9 @@ class RunnApiPeople {
   // fetches all teams where person is assigned
   // https://developer.runn.io/reference/get_people-personid-teams-current
   async fetchTeams(personId) {
-    const values = await this.client.executeRunnApiGET(`/people/${personId}/teams/current`, { urlParams: { limit: 500 } });
+    const values = await this.runnApi.executeRunnApiGET(`/people/${personId}/teams/current`, { urlParams: { limit: 500 } });
 
-    this.client.logger.log('debug', `Runn > People > fetched ${values.length} teams for person id=${personId}`);
+    this.runnApi.logger.log('debug', `Runn > People > fetched ${values.length} teams for person id=${personId}`);
 
     return values;
   }
@@ -248,14 +248,14 @@ class RunnApiPeople {
   // add a specific person to specific team
   // https://developer.runn.io/reference/post_people-personid-teams
   async addToTeam(personId, teamId) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', `Runn > People > (dry-run) added person id=${personId} to team id=${teamId}`);
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > People > (dry-run) added person id=${personId} to team id=${teamId}`);
       return {};
     }
 
-    const response = await this.client.executeRunnApiPOST(`/people/${personId}/teams`, { teamId });
+    const response = await this.runnApi.executeRunnApiPOST(`/people/${personId}/teams`, { teamId });
 
-    this.client.logger.log('debug', `Runn > People > added person id=${personId} to team id=${teamId}`);
+    this.runnApi.logger.log('debug', `Runn > People > added person id=${personId} to team id=${teamId}`);
 
     return response;
   }
@@ -263,14 +263,14 @@ class RunnApiPeople {
   // remove a specific team from person
   // https://developer.runn.io/reference/delete_people-personid-teams-teamid
   async removeFromTeam(personId, teamId) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', `Runn > People > (dry-run) removed person id=${personId} from team id=${teamId}`);
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > People > (dry-run) removed person id=${personId} from team id=${teamId}`);
       return {};
     }
 
-    const response = await this.client.executeRunnApiDELETE(`/people/${personId}/teams/${teamId}`);
+    const response = await this.runnApi.executeRunnApiDELETE(`/people/${personId}/teams/${teamId}`);
 
-    this.client.logger.log('debug', `Runn > People > removed person id=${personId} from team id=${teamId}`);
+    this.runnApi.logger.log('debug', `Runn > People > removed person id=${personId} from team id=${teamId}`);
 
     return response;
   }

@@ -1,12 +1,12 @@
 class RunnApiPhases {
-  constructor(client) {
-    this.client = client;
+  constructor(runnApi) {
+    this.runnApi = runnApi;
   }
 
   // fetches the list of phases from the Runn API
   // https://developer.runn.io/reference/get_phases
   async fetchAll() {
-    const values = await this.client.executeRunnApiGET('/phases', { urlParams: { limit: 500 } });
+    const values = await this.runnApi.executeRunnApiGET('/phases', { urlParams: { limit: 500 } });
 
     /*
       {
@@ -26,7 +26,7 @@ class RunnApiPhases {
       }
     */
 
-    this.client.logger.log('debug', `Runn > Phases > fetched ${values.length} phases`);
+    this.runnApi.logger.log('debug', `Runn > Phases > fetched ${values.length} phases`);
 
     return values;
   }

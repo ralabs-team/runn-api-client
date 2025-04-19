@@ -1,12 +1,12 @@
 class RunnApiMilestones {
-  constructor(client) {
-    this.client = client;
+  constructor(runnApi) {
+    this.runnApi = runnApi;
   }
 
   // fetches the list of milestones from the Runn API
   // https://developer.runn.io/reference/get_milestones
   async fetchAll() {
-    const values = await this.client.executeRunnApiGET('/milestones', { urlParams: { limit: 500 } });
+    const values = await this.runnApi.executeRunnApiGET('/milestones', { urlParams: { limit: 500 } });
 
     /*
       {
@@ -26,7 +26,7 @@ class RunnApiMilestones {
       }
     */
 
-    this.client.logger.log('debug', `Runn > Milestones > fetched ${values.length} milestones`);
+    this.runnApi.logger.log('debug', `Runn > Milestones > fetched ${values.length} milestones`);
 
     return values;
   }

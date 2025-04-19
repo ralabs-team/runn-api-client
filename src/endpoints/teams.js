@@ -1,12 +1,12 @@
 class RunnApiTeams {
-  constructor(client) {
-    this.client = client;
+  constructor(runnApi) {
+    this.runnApi = runnApi;
   }
 
   // fetches the list of teams from the Runn API
   // https://developer.runn.io/reference/get_teams
   async fetchAll() {
-    const values = await this.client.executeRunnApiGET('/teams');
+    const values = await this.runnApi.executeRunnApiGET('/teams');
 
     /*
       {
@@ -17,7 +17,7 @@ class RunnApiTeams {
       }
     */
 
-    this.client.logger.log('debug', `Runn > Teams > fetched ${values.length} teams`);
+    this.runnApi.logger.log('debug', `Runn > Teams > fetched ${values.length} teams`);
 
     return values;
   }
@@ -25,12 +25,12 @@ class RunnApiTeams {
   // create new team
   // https://developer.runn.io/reference/post_teams
   async create(name) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', `Runn > Teams > (dry-run) created team with name=["${name}"] and id=[...]`);
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > Teams > (dry-run) created team with name=["${name}"] and id=[...]`);
       return {};
     }
 
-    const response = await this.client.executeRunnApiPOST('/teams', { name });
+    const response = await this.runnApi.executeRunnApiPOST('/teams', { name });
 
     /*
       {
@@ -41,7 +41,7 @@ class RunnApiTeams {
       }
     */
 
-    this.client.logger.log('debug', `Runn > Teams > created team with name=["${response.name}"] and id=["${response.id}"]`);
+    this.runnApi.logger.log('debug', `Runn > Teams > created team with name=["${response.name}"] and id=["${response.id}"]`);
 
     return response;
   }

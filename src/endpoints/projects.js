@@ -1,13 +1,13 @@
 class RunnApiProjects {
-  constructor(client) {
-    this.client = client;
+  constructor(runnApi) {
+    this.runnApi = runnApi;
   }
 
   // fetches the list of projects from the Runn API.
   // https://developer.runn.io/reference/get_projects-projectid
   // https://app.runn.io/projects
   async fetchAll() {
-    const values = await this.client.executeRunnApiGET('/projects');
+    const values = await this.runnApi.executeRunnApiGET('/projects');
 
     /*
       {
@@ -31,7 +31,7 @@ class RunnApiProjects {
       }
     */
 
-    this.client.logger.log('debug', `Runn > Projects > fetched ${values.length} projects`);
+    this.runnApi.logger.log('debug', `Runn > Projects > fetched ${values.length} projects`);
 
     return values;
   }
@@ -39,15 +39,15 @@ class RunnApiProjects {
   // creates a new project in runn
   // https://app.runn.io/projects
   // https://developer.runn.io/reference/post_projects
-  async create(name, clientId, values = {}) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', `Runn > Projects > (dry-run) created new project with name=["${name}"]`);
+  async create(name, runnApiId, values = {}) {
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > Projects > (dry-run) created new project with name=["${name}"]`);
       return {};
     }
 
-    const response = await this.client.executeRunnApiPOST('/projects', {
+    const response = await this.runnApi.executeRunnApiPOST('/projects', {
       name, // required by Runn API
-      clientId, // required by Runn API
+      runnApiId, // required by Runn API
       ...values,
     });
 
@@ -73,7 +73,7 @@ class RunnApiProjects {
       }
     */
 
-    this.client.logger.log('debug', `Runn > Projects > Created a project "${response.name}" and id="${response.id}"`);
+    this.runnApi.logger.log('debug', `Runn > Projects > Created a project "${response.name}" and id="${response.id}"`);
 
     return response;
   }
@@ -83,8 +83,8 @@ class RunnApiProjects {
   async addCustomSelectFieldValues(projectId, selectId, values = []) {
     values = values.filter((value) => value != null);
 
-    if (this.client.options.isDryRun) {
-      this.client.logger.log(
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log(
         'debug',
         `Runn > Projects > (dry-run) updated project id=[${projectId}] custom field [${selectId}] to values=[${JSON.stringify(values)}]`,
       );
@@ -92,12 +92,12 @@ class RunnApiProjects {
     }
 
     if (!values.length) {
-      this.client.logger.log('warn', `Runn > Projects > empty values passed to update project [${projectId}] custom field [${selectId}]`);
+      this.runnApi.logger.log('warn', `Runn > Projects > empty values passed to update project [${projectId}] custom field [${selectId}]`);
       return;
     }
 
     try {
-      const response = await this.client.executeRunnApiPATCH(`/projects/${projectId}/custom-fields/select`, {
+      const response = await this.runnApi.executeRunnApiPATCH(`/projects/${projectId}/custom-fields/select`, {
         id: selectId,
         values,
       });
@@ -109,7 +109,7 @@ class RunnApiProjects {
         }
       */
 
-      this.client.logger.log(
+      this.runnApi.logger.log(
         'debug',
         `Runn > Projects > updated project id=[${projectId}] custom field [${selectId}] to ${response.values.length} values`,
       );
@@ -117,7 +117,7 @@ class RunnApiProjects {
       return response;
     }
     catch (e) {
-      this.client.logger.log('error', `Runn > Projects > failed to update project id=[${projectId}] custom field [${selectId}]`, e);
+      this.runnApi.logger.log('error', `Runn > Projects > failed to update project id=[${projectId}] custom field [${selectId}]`, e);
       return null;
     }
   }
@@ -125,15 +125,15 @@ class RunnApiProjects {
   // update project
   // https://developer.runn.io/reference/patch_projects-projectid
   async update(projectId, newValues) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log(
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log(
         'debug',
         `Runn > Projects > (dry-run) updated person with id=[${projectId}] to values=[${JSON.stringify(newValues)}]`,
       );
       return {};
     }
 
-    const response = await this.client.executeRunnApiPATCH(`/projects/${projectId}`, newValues);
+    const response = await this.runnApi.executeRunnApiPATCH(`/projects/${projectId}`, newValues);
 
     /*
       {
@@ -157,7 +157,7 @@ class RunnApiProjects {
       }
     */
 
-    this.client.logger.log('debug', `Runn > Projects > updated project with id=[${response.id}] to values=[${JSON.stringify(newValues)}]`);
+    this.runnApi.logger.log('debug', `Runn > Projects > updated project with id=[${response.id}] to values=[${JSON.stringify(newValues)}]`);
 
     return response;
   }
@@ -178,12 +178,12 @@ class RunnApiProjects {
   // usually used to keep history when some changes been made on project, or why project was archived
   // https://developer.runn.io/reference/post_projects-projectid-notes
   async addNote(projectId, note) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', `Runn > Projects > (dry-run) added note to project with id=[${projectId}]`);
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > Projects > (dry-run) added note to project with id=[${projectId}]`);
       return {};
     }
 
-    const response = await this.client.executeRunnApiPOST(`/projects/${projectId}/notes`, { note });
+    const response = await this.runnApi.executeRunnApiPOST(`/projects/${projectId}/notes`, { note });
 
     /*
       {
@@ -195,7 +195,7 @@ class RunnApiProjects {
       }
     */
 
-    this.client.logger.log('debug', `Runn > Projects > added note to project with id=[${projectId}]`);
+    this.runnApi.logger.log('debug', `Runn > Projects > added note to project with id=[${projectId}]`);
 
     return response;
   }

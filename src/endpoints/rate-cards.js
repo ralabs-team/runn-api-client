@@ -1,14 +1,14 @@
 class RunnApiRateCards {
-  constructor(client) {
-    this.client = client;
+  constructor(runnApi) {
+    this.runnApi = runnApi;
   }
 
   // fetches rate card data from the Runn API.
   // https://developer.runn.io/reference/get_rate-cards
   async fetchAll() {
-    const values = await this.client.executeRunnApiGET('/rate-cards');
+    const values = await this.runnApi.executeRunnApiGET('/rate-cards');
 
-    this.client.logger.log('debug', `Runn > RateCards > fetched ${values.length} rate cards`);
+    this.runnApi.logger.log('debug', `Runn > RateCards > fetched ${values.length} rate cards`);
 
     /*
       {
@@ -32,12 +32,12 @@ class RunnApiRateCards {
   // create new rate card on Runn
   // https://developer.runn.io/reference/post_rate-cards
   async create(name, values = {}) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', `Runn > RateCards > (dry-run) created new rate card with params=["${JSON.stringify(values)}"]`);
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > RateCards > (dry-run) created new rate card with params=["${JSON.stringify(values)}"]`);
       return {};
     }
 
-    const response = await this.client.executeRunnApiPOST('/rate-cards', {
+    const response = await this.runnApi.executeRunnApiPOST('/rate-cards', {
       name,
       description: '', // required by Runn API
       isBlendedRateCard: 'false', // required by Runn API
@@ -62,7 +62,7 @@ class RunnApiRateCards {
       }
     */
 
-    this.client.logger.log('debug', `Runn > RateCards > Created a new rate card "${response.name}" and id="${response.id}"`);
+    this.runnApi.logger.log('debug', `Runn > RateCards > Created a new rate card "${response.name}" and id="${response.id}"`);
 
     return response;
   }
@@ -70,14 +70,14 @@ class RunnApiRateCards {
   // TODO blocked by Runn API
   // https://developer.runn.io/reference/delete_rate-cards-ratecardid
   async delete(rateCardId) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', `Runn > RateCards > (dry-run) deleted rate card with id=["${rateCardId}"]`);
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > RateCards > (dry-run) deleted rate card with id=["${rateCardId}"]`);
       return {};
     }
 
-    const response = await this.client.executeRunnApiDELETE(`/rate-cards/${rateCardId}`);
+    const response = await this.runnApi.executeRunnApiDELETE(`/rate-cards/${rateCardId}`);
 
-    this.client.logger.log('debug', `Runn > RateCards > deleted rate card with id="${rateCardId}"`);
+    this.runnApi.logger.log('debug', `Runn > RateCards > deleted rate card with id="${rateCardId}"`);
 
     return response.status == 204;
   }
