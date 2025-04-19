@@ -1,5 +1,10 @@
 # Runn API Client
 
+[![npm version](https://img.shields.io/npm/v/runn-api-client.svg)](https://www.npmjs.com/package/runn-api-client)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Dependencies](https://img.shields.io/librariesio/release/npm/runn-api-client)](https://libraries.io/npm/runn-api-client)
+[![Known Vulnerabilities](https://snyk.io/test/github/ralabs-team/runn-api-client/badge.svg)](https://snyk.io/test/github/ralabs-team/runn-api-client)
+
 API integration with [Runn.io](https://runn.io) - a resource planning and project forecasting platform.
 
 ## Description
