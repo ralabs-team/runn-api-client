@@ -11,15 +11,7 @@ API integration with [Runn.io](https://runn.io) - a resource planning and projec
 
 ## Description
 
-This package provides a simple and intuitive way to interact with the Runn API. It includes support for all of the methods described on [Runn API documentation](https://developer.runn.io/);
-
-- Clients
-- Projects
-- Team
-- People
-- Assignments
-- Custom Fields
-- ...
+This package provides a simple and intuitive way to interact with the Runn API. It includes support for all of the methods described on [Runn API documentation](https://developer.runn.io/) and [Runn API reference](https://developer.runn.io/reference);
 
 ## Installation
 
@@ -88,6 +80,48 @@ The client accepts the following configuration options:
 ## API Documentation
 
 For detailed API documentation, visit the [Runn Developer Portal](https://developer.runn.io/reference).
+
+## Methods
+
+### People
+
+| Method Name | Description | Documentation Link |
+| --- | --- | --- |
+| `fetchAll(): Promise<Person[]>` | Fetches all people from Runn | [link](https://developer.runn.io/reference/get_people) |
+| `fetchOne(personId: string): Promise<Person>` | Fetches a specific person from Runn | [link](https://developer.runn.io/reference/get_people-personid) |
+| `create(firstName: string, lastName: string, roleId: string, otherValues: object): Promise<Person>` | Creates a new person in Runn | [link](https://developer.runn.io/reference/post_people) |
+| `update(personId: string, values: object): Promise<Person>` | Updates a specific person in Runn | [link](https://developer.runn.io/reference/patch_people-personid) |
+| `fetchContracts(personId: string): Promise<Contract[]>` | Fetches all contracts assigned on person | [link](https://developer.runn.io/reference/get_people-personid-contracts) |
+| `addContract(personId: string, roleId: string, options: object): Promise<Contract>` | Adds a new contract to a specific person | [link](https://developer.runn.io/reference/post_people-personid-contracts) |
+| `fetchTeams(personId: string): Promise<Team[]>` | Fetches all teams where person is assigned | [link](https://developer.runn.io/reference/get_people-personid-teams-current) |
+| `addToTeam(personId: string, teamId: string): Promise<Team>` | Adds a specific person to a specific team | [link](https://developer.runn.io/reference/post_people-personid-teams) |
+| `removeFromTeam(personId: string, teamId: string): Promise<Team>` | Removes a specific team from a specific person | [link](https://developer.runn.io/reference/delete_people-personid-teams-teamid) |
+
+### Clients
+
+| Method Name | Description | Documentation Link |
+| --- | --- | --- |
+| `fetchAll(): Promise<Client[]>` | Fetches all clients from Runn | [link](https://developer.runn.io/reference/get_clients) |
+| `fetchOne(clientId: string): Promise<Client>` | Fetches a specific client from Runn | [link](https://developer.runn.io/reference/get_clients-clientid) |
+| `create(name: string, references: string): Promise<Client>` | Creates a new client in Runn | [link](https://developer.runn.io/reference/post_clients) |
+| `update(clientId: string, values: object): Promise<Client>` | Updates a specific client in Runn | [link](https://developer.runn.io/reference/patch_clients-clientid) |
+| `archive(clientId: string): Promise<Client>` | Archives a specific client in Runn | [link](https://developer.runn.io/reference/patch_clients-clientid) |
+| `unarchive(clientId: string): Promise<Client>` | Unarchives a specific client in Runn | [link](https://developer.runn.io/reference/patch_clients-clientid) |
+| `listProjects(clientId: string): Promise<Project[]>` | Fetches all projects assigned to a specific client | [link](https://developer.runn.io/reference/get_clients-clientid-projects) |
+
+- Projects
+	+ `fetchAll()`: Fetches all projects from Runn
+	+ `create(values)`: Creates a new project in Runn
+	+ `addNote(projectId, note)`: Adds a note to a specific project
+	+ `archive(projectId)`: Archives a specific project
+	+ `unarchive(projectId)`: Unarchives a specific project
+- Team
+	+ `fetchAll()`: Fetches all team members from Runn
+- Assignments
+	+ `fetchAll()`: Fetches all assignments from Runn
+	+ `fetchActive()`: Fetches active assignments from Runn
+- Custom Fields
+	+ `addCustomSelectFieldValues(projectId, selectId, values)`: Adds custom select field values to a project
 
 ## Development
 

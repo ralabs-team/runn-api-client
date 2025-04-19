@@ -25,6 +25,16 @@ class RunnApiClients {
     return values;
   }
 
+  // fetches a specific client from the Runn API.
+  // https://developer.runn.io/reference/get_clients-clientid
+  async fetchOne(clientId) {
+    const response = await this.runnApi.executeRunnApiGET(`/clients/${clientId}`);
+
+    this.runnApi.logger.log('debug', `Runn > Clients > fetched client with id="${clientId}"`);
+
+    return response;
+  }
+
   // creates a new client in Runn by sending a POST request to the Runn API.
   // https://developer.runn.io/reference/post_clients
   async create(name, references = []) {

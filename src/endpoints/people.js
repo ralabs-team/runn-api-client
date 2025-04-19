@@ -173,16 +173,16 @@ class RunnApiPeople {
 
   // update person
   // https://developer.runn.io/reference/patch_people-personid
-  async update(personId, newValues) {
+  async update(personId, values) {
     if (this.runnApi.options.isDryRun) {
       this.runnApi.logger.log(
         'debug',
-        `Runn > People > (dry-run) updated person with id=["${personId}"] to values=[${JSON.stringify(newValues)}]`,
+        `Runn > People > (dry-run) updated person with id=["${personId}"] to values=[${JSON.stringify(values)}]`,
       );
       return {};
     }
 
-    const response = await this.runnApi.executeRunnApiPATCH(`/people/${personId}`, newValues);
+    const response = await this.runnApi.executeRunnApiPATCH(`/people/${personId}`, values);
 
     /*
       {
@@ -202,7 +202,7 @@ class RunnApiPeople {
       }
     */
 
-    this.runnApi.logger.log('debug', `Runn > People > updated person with id=["${response.id}"] to values=[${JSON.stringify(newValues)}]`);
+    this.runnApi.logger.log('debug', `Runn > People > updated person with id=["${response.id}"] to values=[${JSON.stringify(values)}]`);
 
     return response;
   }

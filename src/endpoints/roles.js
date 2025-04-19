@@ -37,6 +37,10 @@ class RunnApiRoles {
   // if role is number, return it
   // if role is string, then fetch all roles, and find this one, and return it's id
   async getRoleId(role) {
+    if (!role) {
+      throw new Error('Role is empty');
+    }
+
     if (typeof role === 'number') {
       return role;
     }
