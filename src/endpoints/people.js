@@ -38,86 +38,9 @@ class RunnApiPeople {
     return values;
   }
 
-  // create new person
-  // https://developer.runn.io/reference/post_people
-  async create(values) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log('debug', 'Runn > People > (dry-run) created person with name=["..."] and id=["..."]');
-      return {};
-    }
-
-    const response = await this.client.executeRunnApiPOST('/people', values);
-
-    /*
-      {
-        "id": 0,
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "isArchived": true,
-        "references": [
-          {
-            "referenceName": "string",
-            "externalId": "string"
-          }
-        ],
-        "notes": [ ... ],
-        "tags": [ ... ],
-        "skills": [ ... ],
-        "holidaysGroupId": 0,
-        "customFields": { ... },
-        "createdAt": "2024-12-01T09:49:46.564Z",
-        "updatedAt": "2024-12-01T09:49:46.564Z"
-      }
-    */
-
-    this.client.logger.log(
-      'debug',
-      `Runn > People > created person with name=["${response.firstName} ${response.lastName}"] and id=["${response.id}"]`,
-    );
-
-    return response;
-  }
-
-  // update person
-  // https://developer.runn.io/reference/patch_people-personid
-  async update(personId, newValues) {
-    if (this.client.options.isDryRun) {
-      this.client.logger.log(
-        'debug',
-        `Runn > People > (dry-run) updated person with id=["${personId}"] to values=[${JSON.stringify(newValues)}]`,
-      );
-      return {};
-    }
-
-    const response = await this.client.executeRunnApiPATCH(`/people/${personId}`, newValues);
-
-    /*
-      {
-        "id": 0,
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "isArchived": true,
-        "references": [ .. ],
-        "notes": [ ... ],
-        "tags": [ ... ],
-        "skills": [ ... ],
-        "holidaysGroupId": 0,
-        "customFields": { ... },
-        "createdAt": "2024-12-01T09:49:46.564Z",
-        "updatedAt": "2024-12-01T09:49:46.564Z"
-      }
-    */
-
-    this.client.logger.log('debug', `Runn > People > updated person with id=["${response.id}"] to values=[${JSON.stringify(newValues)}]`);
-
-    return response;
-  }
-
   // fetches specific person
   // https://developer.runn.io/reference/get_people-personid
-  async fetch(personId) {
+  async fetchOne(personId) {
     const values = await this.client.executeRunnApiGET(`/people/${personId}`, {
       parseResponseFn: (data) => data,
     });
@@ -198,6 +121,90 @@ class RunnApiPeople {
     this.client.logger.log('debug', `Runn > People > fetched person id=${personId}`);
 
     return values[0];
+  }
+
+  // create new person
+  // https://developer.runn.io/reference/post_people
+  // required: firstName, lastName, roleId
+  async create(firstName, lastName, roleId, otherValues = {}) {
+    if (this.client.options.isDryRun) {
+      this.client.logger.log('debug', 'Runn > People > (dry-run) created person with name=["..."] and id=["..."]');
+      return {};
+    }
+
+    const response = await this.client.executeRunnApiPOST('/people', {
+      firstName,
+      lastName,
+      // if role is passed as string, then resolve it to id
+      roleId: await this.roles.getRoleId(roleId),
+      ...otherValues,
+    });
+
+    /*
+      {
+        "id": 0,
+        "firstName": "string",
+        "lastName": "string",
+        "email": "string",
+        "isArchived": true,
+        "references": [
+          {
+            "referenceName": "string",
+            "externalId": "string"
+          }
+        ],
+        "notes": [ ... ],
+        "tags": [ ... ],
+        "skills": [ ... ],
+        "holidaysGroupId": 0,
+        "customFields": { ... },
+        "createdAt": "2024-12-01T09:49:46.564Z",
+        "updatedAt": "2024-12-01T09:49:46.564Z"
+      }
+    */
+
+    this.client.logger.log(
+      'debug',
+      `Runn > People > created person with name=["${response.firstName} ${response.lastName}"] and id=["${response.id}"]`,
+    );
+
+    return response;
+  }
+
+  // update person
+  // https://developer.runn.io/reference/patch_people-personid
+  async update(personId, newValues) {
+    if (this.client.options.isDryRun) {
+      this.client.logger.log(
+        'debug',
+        `Runn > People > (dry-run) updated person with id=["${personId}"] to values=[${JSON.stringify(newValues)}]`,
+      );
+      return {};
+    }
+
+    const response = await this.client.executeRunnApiPATCH(`/people/${personId}`, newValues);
+
+    /*
+      {
+        "id": 0,
+        "firstName": "string",
+        "lastName": "string",
+        "email": "string",
+        "isArchived": true,
+        "references": [ .. ],
+        "notes": [ ... ],
+        "tags": [ ... ],
+        "skills": [ ... ],
+        "holidaysGroupId": 0,
+        "customFields": { ... },
+        "createdAt": "2024-12-01T09:49:46.564Z",
+        "updatedAt": "2024-12-01T09:49:46.564Z"
+      }
+    */
+
+    this.client.logger.log('debug', `Runn > People > updated person with id=["${response.id}"] to values=[${JSON.stringify(newValues)}]`);
+
+    return response;
   }
 
   // fetches all contracts assigned on person

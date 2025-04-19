@@ -34,6 +34,22 @@ class RunnApiRoles {
     return values;
   }
 
+  // if role is number, return it
+  // if role is string, then fetch all roles, and find this one, and return it's id
+  async getRoleId(role) {
+    if (typeof role === 'number') {
+      return role;
+    }
+
+    const roles = await this.fetchAll();
+    const foundRole = roles.find((r) => r.name.toLowerCase() === role.toLowerCase());
+    if (foundRole) {
+      return foundRole.id;
+    }
+
+    throw new Error(`Role not found: ${role}`);
+  }
+
   // create new role
   // https://developer.runn.io/reference/post_roles
   async create(name, references = []) {
