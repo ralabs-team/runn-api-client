@@ -84,25 +84,28 @@ For detailed API documentation, visit the [Runn Developer Portal](https://develo
 ## Methods
 
 ### People
-
 | Method Name | Description | Documentation Link |
 | --- | --- | --- |
-| `fetchAll(): Promise<Person[]>` | Fetches all people from Runn | [link](https://developer.runn.io/reference/get_people) |
-| `fetchOne(personId: string): Promise<Person>` | Fetches a specific person from Runn | [link](https://developer.runn.io/reference/get_people-personid) |
-| `create(firstName: string, lastName: string, roleId: string, otherValues: object): Promise<Person>` | Creates a new person in Runn | [link](https://developer.runn.io/reference/post_people) |
-| `update(personId: string, values: object): Promise<Person>` | Updates a specific person in Runn | [link](https://developer.runn.io/reference/patch_people-personid) |
+| `fetchAll({ onlyActive: boolean }): Promise<Person[]>` | Fetches all people from Runn | [link](https://developer.runn.io/reference/get_people) |
+| `fetchOneById(personId: string): Promise<Person>` | Fetches a specific person from Runn | [link](https://developer.runn.io/reference/get_people-personid) |
+| `fetchOneByEmail(email: string): Promise<Person>` | Fetches a specific person by email from Runn | [link](https://developer.runn.io/reference/get_people?email=string) |
+| `create(firstName: string, lastName: string, roleIdOrName: number/string, otherValues: object): Promise<Person>` | Creates a new person in Runn | [link](https://developer.runn.io/reference/post_people) |
+| `update(personId: string, values: object): Promise<Person>` | Updates a specific person in Runn | [link](https://developer.runn.io/reference/get_people) |
 | `fetchContracts(personId: string): Promise<Contract[]>` | Fetches all contracts assigned on person | [link](https://developer.runn.io/reference/get_people-personid-contracts) |
 | `addContract(personId: string, roleId: string, options: object): Promise<Contract>` | Adds a new contract to a specific person | [link](https://developer.runn.io/reference/post_people-personid-contracts) |
 | `fetchTeams(personId: string): Promise<Team[]>` | Fetches all teams where person is assigned | [link](https://developer.runn.io/reference/get_people-personid-teams-current) |
 | `addToTeam(personId: string, teamId: string): Promise<Team>` | Adds a specific person to a specific team | [link](https://developer.runn.io/reference/post_people-personid-teams) |
 | `removeFromTeam(personId: string, teamId: string): Promise<Team>` | Removes a specific team from a specific person | [link](https://developer.runn.io/reference/delete_people-personid-teams-teamid) |
+| `archive(personId: string): Promise<Person>` | Archives a specific person in Runn | [link](https://developer.runn.io/reference/patch_people-personid) |
+| `unarchive(personId: string): Promise<Person>` | Unarchives a specific person in Runn | [link](https://developer.runn.io/reference/patch_people-personid) |
+| `delete(personId: string): Promise<Person>` | Deletes a specific person in Runn | [link](https://developer.runn.io/reference/delete_people-personid) |
 
 ### Clients
 
 | Method Name | Description | Documentation Link |
 | --- | --- | --- |
 | `fetchAll(): Promise<Client[]>` | Fetches all clients from Runn | [link](https://developer.runn.io/reference/get_clients) |
-| `fetchOne(clientId: string): Promise<Client>` | Fetches a specific client from Runn | [link](https://developer.runn.io/reference/get_clients-clientid) |
+| `fetchOneById(clientId: string): Promise<Client>` | Fetches a specific client from Runn | [link](https://developer.runn.io/reference/get_clients-clientid) |
 | `create(name: string, references: string): Promise<Client>` | Creates a new client in Runn | [link](https://developer.runn.io/reference/post_clients) |
 | `update(clientId: string, values: object): Promise<Client>` | Updates a specific client in Runn | [link](https://developer.runn.io/reference/patch_clients-clientid) |
 | `archive(clientId: string): Promise<Client>` | Archives a specific client in Runn | [link](https://developer.runn.io/reference/patch_clients-clientid) |

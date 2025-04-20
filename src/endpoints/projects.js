@@ -4,7 +4,7 @@ class RunnApiProjects {
   }
 
   // fetches the list of projects from the Runn API.
-  // https://developer.runn.io/reference/get_projects-projectid
+  // https://developer.runn.io/reference/get_projects
   // https://app.runn.io/projects
   async fetchAll() {
     const values = await this.runnApi.executeRunnApiGET('/projects');
@@ -34,6 +34,16 @@ class RunnApiProjects {
     this.runnApi.logger.log('debug', `Runn > Projects > fetched ${values.length} projects`);
 
     return values;
+  }
+
+  // fetches a specific project from the Runn API.
+  // https://developer.runn.io/reference/get_projects-projectid
+  async fetchOneById(projectId) {
+    const response = await this.runnApi.executeRunnApiGET(`/projects/${projectId}`);
+
+    this.runnApi.logger.log('debug', `Runn > Projects > fetched project with id=["${projectId}"]`);
+
+    return response;
   }
 
   // creates a new project in runn

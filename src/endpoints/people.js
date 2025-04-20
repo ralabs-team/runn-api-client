@@ -5,8 +5,8 @@ class RunnApiPeople {
 
   // fetches the list of people from the Runn API
   // https://developer.runn.io/reference/get_people
-  async fetchAll() {
-    const values = await this.runnApi.executeRunnApiGET('/people', { urlParams: { includePlaceholders: true, limit: 200 } });
+  async fetchAll({ onlyActive = false } = {}) {
+    let values = await this.runnApi.executeRunnApiGET('/people', { urlParams: { includePlaceholders: !onlyActive, limit: 200 } });
 
     /*
       {
@@ -33,6 +33,10 @@ class RunnApiPeople {
       }
     */
 
+    if (onlyActive) {
+      values = values.filter((person) => !person.isArchived);
+    }
+
     this.runnApi.logger.log('debug', `Runn > People > fetched ${values.length} people`);
 
     return values;
@@ -40,7 +44,7 @@ class RunnApiPeople {
 
   // fetches specific person
   // https://developer.runn.io/reference/get_people-personid
-  async fetchOne(personId) {
+  async fetchOneById(personId) {
     const values = await this.runnApi.executeRunnApiGET(`/people/${personId}`, {
       parseResponseFn: (data) => data,
     });
@@ -123,20 +127,36 @@ class RunnApiPeople {
     return values[0];
   }
 
+  // fetches a single person by email
+  // https://developer.runn.io/reference/get_people?email=string
+  async fetchOneByEmail(email) {
+    const values = await this.runnApi.executeRunnApiGET('/people', { urlParams: { email } });
+
+    if (values.length === 0) {
+      throw new Error(`Person with email=${email} not found`);
+    }
+
+    return values[0];
+  }
+
   // create new person
   // https://developer.runn.io/reference/post_people
   // required: firstName, lastName, roleId
-  async create(firstName, lastName, roleId, otherValues = {}) {
+  async create(firstName, lastName, roleIdOrName, otherValues = {}) {
     if (this.runnApi.options.isDryRun) {
       this.runnApi.logger.log('debug', 'Runn > People > (dry-run) created person with name=["..."] and id=["..."]');
       return {};
+    }
+
+    if (!roleIdOrName) {
+      throw new Error('Role should be passed as number or string');
     }
 
     const response = await this.runnApi.executeRunnApiPOST('/people', {
       firstName,
       lastName,
       // if role is passed as string, then resolve it to id
-      roleId: await this.runnApi.roles.getRoleId(roleId),
+      roleId: await this.runnApi.roles.getRoleId(roleIdOrName),
       ...otherValues,
     });
 
@@ -271,6 +291,33 @@ class RunnApiPeople {
     const response = await this.runnApi.executeRunnApiDELETE(`/people/${personId}/teams/${teamId}`);
 
     this.runnApi.logger.log('debug', `Runn > People > removed person id=${personId} from team id=${teamId}`);
+
+    return response;
+  }
+
+  // archive person
+  // https://developer.runn.io/reference/patch_people-personid
+  async archive(personId) {
+    return await this.update(personId, { isArchived: true });
+  }
+
+  // unarchive person
+  // https://developer.runn.io/reference/patch_people-personid
+  async unarchive(personId) {
+    return await this.update(personId, { isArchived: false });
+  }
+
+  // delete a person
+  // https://developer.runn.io/reference/delete_people-personid
+  async delete(personId) {
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > People > (dry-run) deleted person with id=["${personId}"]`);
+      return {};
+    }
+
+    const response = await this.runnApi.executeRunnApiDELETE(`/people/${personId}`);
+
+    this.runnApi.logger.log('debug', `Runn > People > deleted person with id=["${personId}"]`);
 
     return response;
   }
