@@ -15,7 +15,7 @@ class RunnApiAssignments {
       urlParams.modifiedAfter = modifiedAfter;
     }
 
-    const values = await this.runnApi.executeRunnApiGET('/assignments', { urlParams });
+    let values = await this.runnApi.executeRunnApiGET('/assignments', { urlParams });
 
     /*
     {

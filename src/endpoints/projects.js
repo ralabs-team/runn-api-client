@@ -16,7 +16,7 @@ class RunnApiProjects {
       urlParams.modifiedAfter = modifiedAfter;
     }
 
-    const values = await this.runnApi.executeRunnApiGET('/projects', { urlParams });
+    let values = await this.runnApi.executeRunnApiGET('/projects', { urlParams });
 
     /*
       {
@@ -52,17 +52,19 @@ class RunnApiProjects {
   // fetches a specific project from the Runn API.
   // https://developer.runn.io/reference/get_projects-projectid
   async fetchOneById(projectId) {
-    const response = await this.runnApi.executeRunnApiGET(`/projects/${projectId}`);
+    const response = await this.runnApi.executeRunnApiGET(`/projects/${projectId}`, {
+      parseResponseFn: (data) => data,
+    });
 
     this.runnApi.logger.log('debug', `Runn > Projects > fetched project with id=["${projectId}"]`);
 
-    return response;
+    return response[0];
   }
 
   // creates a new project in runn
   // https://app.runn.io/projects
   // https://developer.runn.io/reference/post_projects
-  async create(name, runnApiId, values = {}) {
+  async create(name, clientId, values = {}) {
     if (this.runnApi.options.isDryRun) {
       this.runnApi.logger.log('debug', `Runn > Projects > (dry-run) created new project with name=["${name}"]`);
       return {};
@@ -70,7 +72,7 @@ class RunnApiProjects {
 
     const response = await this.runnApi.executeRunnApiPOST('/projects', {
       name, // required by Runn API
-      runnApiId, // required by Runn API
+      clientId, // required by Runn API
       ...values,
     });
 
@@ -195,6 +197,21 @@ class RunnApiProjects {
   // https://developer.runn.io/reference/patch_projects-projectid
   async unarchive(projectId) {
     return await this.update(projectId, { isArchived: false });
+  }
+
+  // delete a specific project on Runn
+  // https://developer.runn.io/reference/delete_projects-projectid
+  async delete(projectId) {
+    if (this.runnApi.options.isDryRun) {
+      this.runnApi.logger.log('debug', `Runn > Projects > (dry-run) deleted project with id=[${projectId}]`);
+      return {};
+    }
+
+    const response = await this.runnApi.executeRunnApiDELETE(`/projects/${projectId}`);
+
+    this.runnApi.logger.log('debug', `Runn > Projects > deleted project with id=[${projectId}]`);
+
+    return response;
   }
 
   // create a project note

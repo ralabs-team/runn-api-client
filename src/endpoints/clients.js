@@ -15,7 +15,7 @@ class RunnApiClients {
       urlParams.modifiedAfter = modifiedAfter;
     }
 
-    const values = await this.runnApi.executeRunnApiGET('/clients', { urlParams });
+    let values = await this.runnApi.executeRunnApiGET('/clients', { urlParams });
 
     /*
       {
@@ -41,16 +41,18 @@ class RunnApiClients {
   // fetches a specific client from the Runn API.
   // https://developer.runn.io/reference/get_clients-clientid
   async fetchOneById(clientId) {
-    const response = await this.runnApi.executeRunnApiGET(`/clients/${clientId}`);
+    const response = await this.runnApi.executeRunnApiGET(`/clients/${clientId}`, {
+      parseResponseFn: (data) => data,
+    });
 
     this.runnApi.logger.log('debug', `Runn > Clients > fetched client with id="${clientId}"`);
 
-    return response;
+    return response[0];
   }
 
   // creates a new client in Runn by sending a POST request to the Runn API.
   // https://developer.runn.io/reference/post_clients
-  async create(name, references = []) {
+  async create(name, references = [], values = {}) {
     if (this.runnApi.options.isDryRun) {
       this.runnApi.logger.log('debug', `Runn > Clients > (dry-run) created new client name=["${name}"]`);
       return {};
@@ -59,6 +61,7 @@ class RunnApiClients {
     const response = await this.runnApi.executeRunnApiPOST('/clients', {
       name,
       references,
+      ...values
     });
 
     /*

@@ -107,7 +107,7 @@ For detailed API documentation, visit the [Runn Developer Portal](https://develo
 | --- | --- | --- |
 | `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Client[]>` | Fetches all clients from Runn | [link](https://developer.runn.io/reference/get_clients) |
 | `fetchOneById(clientId: string): Promise<Client>` | Fetches a specific client from Runn | [link](https://developer.runn.io/reference/get_clients-clientid) |
-| `create(name: string, references: string): Promise<Client>` | Creates a new client in Runn | [link](https://developer.runn.io/reference/post_clients) |
+| `create(name: string, references: string[], values: object): Promise<Client>` | Creates a new client in Runn | [link](https://developer.runn.io/reference/post_clients) |
 | `update(clientId: string, values: object): Promise<Client>` | Updates a specific client in Runn | [link](https://developer.runn.io/reference/patch_clients-clientid) |
 | `archive(clientId: string): Promise<Client>` | Archives a specific client in Runn | [link](https://developer.runn.io/reference/patch_clients-clientid) |
 | `unarchive(clientId: string): Promise<Client>` | Unarchives a specific client in Runn | [link](https://developer.runn.io/reference/patch_clients-clientid) |
@@ -183,11 +183,12 @@ createSelectCustomField(name: string, model: string, options: CustomFieldOption[
 | --- | --- | --- |
 | `fetchAll(): Promise<Project[]>` | Fetches all projects from Runn | [link](https://developer.runn.io/reference/get_projects) |
 | `fetchOneById(projectId: string): Promise<Project>` | Fetches a specific project from Runn | [link](https://developer.runn.io/reference/get_projects-projectid) |
-| `create(values)`: Creates a new project in Runn | [link](https://developer.runn.io/reference/post_projects) |
+| `create(name, clientId, values)`: Creates a new project in Runn | [link](https://developer.runn.io/reference/post_projects) |
 | `addCustomSelectFieldValues(projectId: string, customSelectFieldId: string, values: object): Promise<Project>` | Adds custom select field values to a specific project | [link](https://developer.runn.io/reference/patch_projects-projectid-custom-fields-select) |
 | `update(projectId: string, values: object): Promise<Project>` | Updates a specific project in Runn | [link](https://developer.runn.io/reference/patch_projects-projectid) |
 | `archive(projectId)`: Archives a specific project | [link](https://developer.runn.io/reference/patch_projects-projectid) |
 | `unarchive(projectId)`: Unarchives a specific project | [link](https://developer.runn.io/reference/patch_projects-projectid) |
+| `delete(projectId)`: Deletes a specific project in Runn | [link](https://developer.runn.io/reference/delete_projects-projectid) |
 | `addNote(projectId, note)`: Adds a note to a specific project | [link](https://developer.runn.io/reference/post_projects-projectid-notes) |
 
 ### Rate Cards
