@@ -7,7 +7,13 @@
 
 API integration with [Runn.io](https://runn.io) - a resource planning and project forecasting platform.
 
+[Ralabs](https://ralabs.org) is a software dev company, who creates integration between 3rd parties (Salesforce, PowerBI, etc).
+
 [![Watch the Loom](https://github.com/user-attachments/assets/4c980433-613d-4a89-9cfd-db68b34859c0)](https://www.loom.com/share/8ab2296ce6994eaba2c1c499f123a659?sid=a1388290-02a4-49e9-b57f-19b6c9c023a4)
+
+## Author
+
+Roman Rodomansky, [roman@ralabs.org](mailto:roman@ralabs.org) @ [Ralabs](https://ralabs.org)
 
 ## Description
 
@@ -231,10 +237,6 @@ cd runn-api-client
 npm install
 npm link runn-api-client
 ```
-
-## Author
-
-Roman Rodomansky @ [Ralabs](https://ralabs.org)
 
 ## License
 
