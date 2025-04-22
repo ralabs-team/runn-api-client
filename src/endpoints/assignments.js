@@ -5,8 +5,17 @@ class RunnApiAssignments {
 
   // return all allocationns from Runn
   // https://developer.runn.io/reference/get_assignments
-  async fetchAll() {
-    const values = await this.runnApi.executeRunnApiGET('/assignments', { urlParams: { limit: 500 } });
+  async fetchAll({ onlyActive = false, modifiedAfter = null } = {}) {
+    const urlParams = {
+      limit: 500
+    };
+
+    // Format: YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ
+    if (modifiedAfter) {
+      urlParams.modifiedAfter = modifiedAfter;
+    }
+
+    const values = await this.runnApi.executeRunnApiGET('/assignments', { urlParams });
 
     /*
     {
@@ -33,8 +42,11 @@ class RunnApiAssignments {
       ],
       "nextCursor": "string"
     }
-
     */
+
+    if (onlyActive) {
+      values = values.filter((allocation) => allocation.isActive && !allocation.isPlaceholder && !allocation.isTemplate);
+    }
 
     this.runnApi.logger.log('debug', `Runn > Assignments > fetched ${values.length} assignments`);
 

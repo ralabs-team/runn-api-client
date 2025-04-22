@@ -6,8 +6,17 @@ class RunnApiProjects {
   // fetches the list of projects from the Runn API.
   // https://developer.runn.io/reference/get_projects
   // https://app.runn.io/projects
-  async fetchAll() {
-    const values = await this.runnApi.executeRunnApiGET('/projects');
+  async fetchAll({ onlyActive = false, modifiedAfter = null } = {}) {
+    const urlParams = {
+      limit: 200
+    };
+
+    // Format: YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ
+    if (modifiedAfter) {
+      urlParams.modifiedAfter = modifiedAfter;
+    }
+
+    const values = await this.runnApi.executeRunnApiGET('/projects', { urlParams });
 
     /*
       {
@@ -30,6 +39,10 @@ class RunnApiProjects {
         "updatedAt": "2024-12-01T15:31:36.195Z"
       }
     */
+
+    if (onlyActive) {
+      values = values.filter((project) => !project.isArchived);
+    }
 
     this.runnApi.logger.log('debug', `Runn > Projects > fetched ${values.length} projects`);
 

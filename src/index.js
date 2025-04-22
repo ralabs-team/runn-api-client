@@ -21,6 +21,8 @@ class RunnApiClient {
       logLevel: this.options.logLevel,
     });
 
+    this.activityLog = new (require('./endpoints/activity-log'))(this);
+    this.actuals = new (require('./endpoints/actuals'))(this);
     this.assignments = new (require('./endpoints/assignments'))(this);
     this.clients = new (require('./endpoints/clients'))(this);
     this.contracts = new (require('./endpoints/contracts'))(this);
@@ -35,6 +37,7 @@ class RunnApiClient {
     this.rateCards = new (require('./endpoints/rate-cards'))(this);
     this.roles = new (require('./endpoints/roles'))(this);
     this.teams = new (require('./endpoints/teams'))(this);
+    this.users = new (require('./endpoints/users'))(this);
   }
 
   // return default headers needed by Runn API
@@ -129,7 +132,7 @@ class RunnApiClient {
   async executeRunnApiGET(urlPrefix, params = {}) {
     let url = `${this.options.RUNN_API_URL}${urlPrefix}`;
     let results = [];
-    let cursor = null;
+    let cursor = undefined; // don't include `cursor` in the first URL param
 
     const options = { headers: this.getRequestHeaders('get') };
 

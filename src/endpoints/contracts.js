@@ -5,8 +5,17 @@ class RunnApiContracts {
 
   // fetches all people contracts
   // https://developer.runn.io/reference/get_contracts
-  async fetchAll() {
-    const values = await this.runnApi.executeRunnApiGET('/contracts');
+  async fetchAll({ modifiedAfter = null } = {}) {
+    const urlParams = {
+      limit: 200
+    };
+
+    // Format: YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ
+    if (modifiedAfter) {
+      urlParams.modifiedAfter = modifiedAfter;
+    }
+
+    const values = await this.runnApi.executeRunnApiGET('/contracts', { urlParams });
 
     this.runnApi.logger.log('debug', `Runn > Contracts > fetched ${values.length} people contracts`);
 

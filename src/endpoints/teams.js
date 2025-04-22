@@ -5,8 +5,17 @@ class RunnApiTeams {
 
   // fetches the list of teams from the Runn API
   // https://developer.runn.io/reference/get_teams
-  async fetchAll() {
-    const values = await this.runnApi.executeRunnApiGET('/teams');
+  async fetchAll({ modifiedAfter = null } = {}) {
+    const urlParams = {
+      limit: 200
+    };
+
+    // Format: YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ
+    if (modifiedAfter) {
+      urlParams.modifiedAfter = modifiedAfter;
+    }
+
+    const values = await this.runnApi.executeRunnApiGET('/teams', { urlParams });
 
     /*
       {

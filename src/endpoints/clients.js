@@ -5,8 +5,17 @@ class RunnApiClients {
 
   // fetches the list of clients from the Runn API.
   // https://developer.runn.io/reference/get_clients
-  async fetchAll() {
-    const values = await this.runnApi.executeRunnApiGET('/clients');
+  async fetchAll({ onlyActive = false, modifiedAfter = null } = {}) {
+    const urlParams = {
+      limit: 200
+    };
+
+    // Format: YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ
+    if (modifiedAfter) {
+      urlParams.modifiedAfter = modifiedAfter;
+    }
+
+    const values = await this.runnApi.executeRunnApiGET('/clients', { urlParams });
 
     /*
       {
@@ -19,6 +28,10 @@ class RunnApiClients {
         updatedAt: '2024-11-28T15:43:32.198Z'
       }
     */
+
+    if (onlyActive) {
+      values = values.filter((client) => !client.isArchived);
+    }
 
     this.runnApi.logger.log('debug', `Runn > Clients > fetched ${values.length} clients`);
 

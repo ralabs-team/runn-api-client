@@ -5,8 +5,18 @@ class RunnApiPeople {
 
   // fetches the list of people from the Runn API
   // https://developer.runn.io/reference/get_people
-  async fetchAll({ onlyActive = false } = {}) {
-    let values = await this.runnApi.executeRunnApiGET('/people', { urlParams: { includePlaceholders: !onlyActive, limit: 200 } });
+  async fetchAll({ onlyActive = false, modifiedAfter = null } = {}) {
+    const urlParams = {
+      includePlaceholders: !onlyActive,
+      limit: 200
+    };
+
+    // Format: YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ
+    if (modifiedAfter) {
+      urlParams.modifiedAfter = modifiedAfter;
+    }
+
+    let values = await this.runnApi.executeRunnApiGET('/people', { urlParams });
 
     /*
       {
