@@ -10,7 +10,7 @@ class RunnApiCustomFields {
 
   // fetches custom fields from the Runn API.
   // https://developer.runn.io/reference/get_custom-fields-select
-  async fetchRunnCustomFields() {
+  async fetchAllSelectFields() {
     const values = await this.runnApi.executeRunnApiGET('/custom-fields/select');
 
     this.runnApi.logger.log('debug', `Runn > Custom Fields > fetched ${values.length} custom-fields`);
@@ -45,7 +45,7 @@ class RunnApiCustomFields {
 
   // receive custom project fetches
   // https://developer.runn.io/reference/get_custom-fields-select
-  async fetchRunnProjectsCustomFields() {
+  async fetchProjectsSelectCustomFields() {
     const fields = await this.fetchRunnCustomFields();
 
     return fields.filter((k) => k.model == RUNN_CUSTOM_FIELD_MODEL_PROJECT);
@@ -61,7 +61,7 @@ class RunnApiCustomFields {
 
   // create new custom field with type=Select
   // https://developer.runn.io/reference/post_custom-fields-select
-  async createRunnSelectCustomField(name, model, options, params) {
+  async createSelectCustomField(name, model, options, params) {
     if (this.runnApi.options.isDryRun) {
       this.runnApi.logger.log(
         'debug',

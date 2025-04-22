@@ -85,27 +85,27 @@ For detailed API documentation, visit the [Runn Developer Portal](https://develo
 
 ### Activity
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Activity[]>` | Fetches all activities from Runn | [link](https://developer.runn.io/reference/get_activities) |
+| `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Activity[]>` | Fetches all activities from Runn | [link](https://developer.runn.io/reference/get_activity-log) |
 
 ### Actuals
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
 | `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Actual[]>` | Fetches all actuals from Runn | [link](https://developer.runn.io/reference/get_actuals) |
 
 ### Assignments
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
 | `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Assignment[]>` | Fetches all assignments from Runn | [link](https://developer.runn.io/reference/get_assignments) |
 
 ### Clients
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll(): Promise<Client[]>` | Fetches all clients from Runn | [link](https://developer.runn.io/reference/get_clients) |
+| `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Client[]>` | Fetches all clients from Runn | [link](https://developer.runn.io/reference/get_clients) |
 | `fetchOneById(clientId: string): Promise<Client>` | Fetches a specific client from Runn | [link](https://developer.runn.io/reference/get_clients-clientid) |
 | `create(name: string, references: string): Promise<Client>` | Creates a new client in Runn | [link](https://developer.runn.io/reference/post_clients) |
 | `update(clientId: string, values: object): Promise<Client>` | Updates a specific client in Runn | [link](https://developer.runn.io/reference/patch_clients-clientid) |
@@ -115,61 +115,38 @@ For detailed API documentation, visit the [Runn Developer Portal](https://develo
 
 ### Contracts
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
 | `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Contract[]>` | Fetches all contracts from Runn | [link](https://developer.runn.io/reference/get_contracts) |
-| `fetchOneById(contractId: string): Promise<Contract>` | Fetches a specific contract from Runn | [link](https://developer.runn.io/reference/get_contracts-contractid) |
-| `create(values): Promise<Contract>` | Creates a new contract in Runn | [link](https://developer.runn.io/reference/post_contracts) |
-| `update(contractId: string, values: object): Promise<Contract>` | Updates a specific contract in Runn | [link](https://developer.runn.io/reference/patch_contracts-contractid) |
-| `archive(contractId: string): Promise<Contract>` | Archives a specific contract in Runn | [link](https://developer.runn.io/reference/patch_contracts-contractid) |
-| `unarchive(contractId: string): Promise<Contract>` | Unarchives a specific contract in Runn | [link](https://developer.runn.io/reference/patch_contracts-contractid) |
 
 ### Custom Fields
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<CustomField[]>` | Fetches all custom fields from Runn | [link](https://developer.runn.io/reference/get_custom_fields) |
-| `fetchOneById(customFieldId: string): Promise<CustomField>` | Fetches a specific custom field from Runn | [link](https://developer.runn.io/reference/get_custom_fields-customfieldid) |
-| `create(values): Promise<CustomField>` | Creates a new custom field in Runn | [link](https://developer.runn.io/reference/post_custom_fields) |
-| `update(customFieldId: string, values: object): Promise<CustomField>` | Updates a specific custom field in Runn | [link](https://developer.runn.io/reference/patch_custom_fields-customfieldid) |
-| `archive(customFieldId: string): Promise<CustomField>` | Archives a specific custom field in Runn | [link](https://developer.runn.io/reference/patch_custom_fields-customfieldid) |
-| `unarchive(customFieldId: string): Promise<CustomField>` | Unarchives a specific custom field in Runn | [link](https://developer.runn.io/reference/patch_custom_fields-customfieldid) |
+| `fetchAllSelectFields(): Promise<CustomField[]>` | Fetches all custom fields from Runn | [link](https://developer.runn.io/reference/delete_custom-fields-checkbox-checkboxfieldid) |
+fetchProjectsSelectCustomFields(): Promise<CustomField[]>` | Fetches all custom fields from Runn | [link](https://developer.runn.io/reference/get_custom-fields-select) |
+createSelectCustomField(name: string, model: string, options: CustomFieldOption[], params: object): Promise<CustomField>` | Creates a new custom field in Runn | [link](https://developer.runn.io/reference/post_custom-fields-select) |
 
 ### Holiday Groups
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll(): Promise<HolidayGroup[]>` | Fetches all holiday groups from Runn | [link](https://developer.runn.io/reference/get_holiday_groups) |
-| `fetchOneById(holidayGroupId: string): Promise<HolidayGroup>` | Fetches a specific holiday group from Runn | [link](https://developer.runn.io/reference/get_holiday_groups-holidaygroupid) |
-| `create(values): Promise<HolidayGroup>` | Creates a new holiday group in Runn | [link](https://developer.runn.io/reference/post_holiday_groups) |
-| `update(holidayGroupId: string, values: object): Promise<HolidayGroup>` | Updates a specific holiday group in Runn | [link](https://developer.runn.io/reference/patch_holiday_groups-holidaygroupid) |
-| `archive(holidayGroupId: string): Promise<HolidayGroup>` | Archives a specific holiday group in Runn | [link](https://developer.runn.io/reference/patch_holiday_groups-holidaygroupid) |
-| `unarchive(holidayGroupId: string): Promise<HolidayGroup>` | Unarchives a specific holiday group in Runn | [link](https://developer.runn.io/reference/patch_holiday_groups-holidaygroupid) |
+| `fetchAll(): Promise<HolidayGroup[]>` | Fetches all holiday groups from Runn | [link](https://developer.runn.io/reference/get_holiday-groups) |
 
 ### Milestones
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Milestone[]>` | Fetches all milestones from Runn | [link](https://developer.runn.io/reference/get_milestones) |
-| `fetchOneById(milestoneId: string): Promise<Milestone>` | Fetches a specific milestone from Runn | [link](https://developer.runn.io/reference/get_milestones-milestoneid) |
-| `create(values): Promise<Milestone>` | Creates a new milestone in Runn | [link](https://developer.runn.io/reference/post_milestones) |
-| `update(milestoneId: string, values: object): Promise<Milestone>` | Updates a specific milestone in Runn | [link](https://developer.runn.io/reference/patch_milestones-milestoneid) |
-| `archive(milestoneId: string): Promise<Milestone>` | Archives a specific milestone in Runn | [link](https://developer.runn.io/reference/patch_milestones-milestoneid) |
-| `unarchive(milestoneId: string): Promise<Milestone>` | Unarchives a specific milestone in Runn | [link](https://developer.runn.io/reference/patch_milestones-milestoneid) |
+| `fetchAll(): Promise<Milestone[]>` | Fetches all milestones from Runn | [link](https://developer.runn.io/reference/get_milestones) |
 
 ### Other Expenses
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<OtherExpense[]>` | Fetches all other expenses from Runn | [link](https://developer.runn.io/reference/get_other_expenses) |
-| `fetchOneById(otherExpenseId: string): Promise<OtherExpense>` | Fetches a specific other expense from Runn | [link](https://developer.runn.io/reference/get_other_expenses-otherexpenseid) |
-| `create(values): Promise<OtherExpense>` | Creates a new other expense in Runn | [link](https://developer.runn.io/reference/post_other_expenses) |
-| `update(otherExpenseId: string, values: object): Promise<OtherExpense>` | Updates a specific other expense in Runn | [link](https://developer.runn.io/reference/patch_other_expenses-otherexpenseid) |
-| `archive(otherExpenseId: string): Promise<OtherExpense>` | Archives a specific other expense in Runn | [link](https://developer.runn.io/reference/patch_other_expenses-otherexpenseid) |
-| `unarchive(otherExpenseId: string): Promise<OtherExpense>` | Unarchives a specific other expense in Runn | [link](https://developer.runn.io/reference/patch_other_expenses-otherexpenseid) |
+| `fetchAll(): Promise<OtherExpense[]>` | Fetches all other expenses from Runn | [link](https://developer.runn.io/reference/get_other-expenses) |
 
 ### People
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
 | `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Person[]>` | Fetches all people from Runn | [link](https://developer.runn.io/reference/get_people) |
 | `fetchOneById(personId: string): Promise<Person>` | Fetches a specific person from Runn | [link](https://developer.runn.io/reference/get_people-personid) |
@@ -187,62 +164,61 @@ For detailed API documentation, visit the [Runn Developer Portal](https://develo
 
 ### Phases
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll({ onlyActive: boolean, modifiedAfter: string }): Promise<Phase[]>` | Fetches all phases from Runn | [link](https://developer.runn.io/reference/get_phases) |
-| `fetchOneById(phaseId: string): Promise<Phase>` | Fetches a specific phase from Runn | [link](https://developer.runn.io/reference/get_phases-phaseid) |
-| `create(values): Promise<Phase>` | Creates a new phase in Runn | [link](https://developer.runn.io/reference/post_phases) |
-| `update(phaseId: string, values: object): Promise<Phase>` | Updates a specific phase in Runn | [link](https://developer.runn.io/reference/patch_phases-phaseid) |
-| `archive(phaseId: string): Promise<Phase>` | Archives a specific phase in Runn | [link](https://developer.runn.io/reference/patch_phases-phaseid) |
-| `unarchive(phaseId: string): Promise<Phase>` | Unarchives a specific phase in Runn | [link](https://developer.runn.io/reference/patch_phases-phaseid) |
+| `fetchAll(): Promise<Phase[]>` | Fetches all phases from Runn | [link](https://developer.runn.io/reference/get_phases) |
 
 ### Project Tags
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll(): Promise<ProjectTag[]>` | Fetches all project tags from Runn | [link](https://developer.runn.io/reference/get_project_tags) |
-| `create(values): Promise<ProjectTag>` | Creates a new project tag in Runn | [link](https://developer.runn.io/reference/post_project_tags) |
-| `update(projectTagId: string, values: object): Promise<ProjectTag>` | Updates a specific project tag in Runn | [link](https://developer.runn.io/reference/patch_project_tags-projecttagid) |
-| `archive(projectTagId: string): Promise<ProjectTag>` | Archives a specific project tag in Runn | [link](https://developer.runn.io/reference/patch_project_tags-projecttagid) |
-| `unarchive(projectTagId: string): Promise<ProjectTag>` | Unarchives a specific project tag in Runn | [link](https://developer.runn.io/reference/patch_project_tags-projecttagid) |
+| `fetchAll(): Promise<ProjectTag[]>` | Fetches all project tags from Runn | [link](https://developer.runn.io/reference/get_project-tags) |
+| `create(values): Promise<ProjectTag>` | Creates a new project tag in Runn | [link](https://developer.runn.io/reference/post_project-tags) |
+| `addToProject(projectTagId: string, projectId: string): Promise<ProjectTag>` | Adds a project tag to a specific project | [link](https://developer.runn.io/reference/post_project-tags-projecttagid-project-projectid) |
+| `createOrUpdate(values): Promise<ProjectTag>` | Creates or updates a project tag in Runn | [link](https://developer.runn.io/reference/post_project-tags) |
 
 ### Projects
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
 | `fetchAll(): Promise<Project[]>` | Fetches all projects from Runn | [link](https://developer.runn.io/reference/get_projects) |
+| `fetchOneById(projectId: string): Promise<Project>` | Fetches a specific project from Runn | [link](https://developer.runn.io/reference/get_projects-projectid) |
 | `create(values)`: Creates a new project in Runn | [link](https://developer.runn.io/reference/post_projects) |
-| `addNote(projectId, note)`: Adds a note to a specific project | [link](https://developer.runn.io/reference/post_projects-projectid-notes) |
+| `addCustomSelectFieldValues(projectId: string, customSelectFieldId: string, values: object): Promise<Project>` | Adds custom select field values to a specific project | [link](https://developer.runn.io/reference/patch_projects-projectid-custom-fields-select) |
+| `update(projectId: string, values: object): Promise<Project>` | Updates a specific project in Runn | [link](https://developer.runn.io/reference/patch_projects-projectid) |
 | `archive(projectId)`: Archives a specific project | [link](https://developer.runn.io/reference/patch_projects-projectid) |
 | `unarchive(projectId)`: Unarchives a specific project | [link](https://developer.runn.io/reference/patch_projects-projectid) |
+| `addNote(projectId, note)`: Adds a note to a specific project | [link](https://developer.runn.io/reference/post_projects-projectid-notes) |
 
 ### Rate Cards
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll(): Promise<RateCard[]>` | Fetches all rate cards from Runn | [link](https://developer.runn.io/reference/get_rate_cards) |
-| `create(values): Promise<RateCard>` | Creates a new rate card in Runn | [link](https://developer.runn.io/reference/post_rate_cards) |
-| `update(rateCardId: string, values: object): Promise<RateCard>` | Updates a specific rate card in Runn | [link](https://developer.runn.io/reference/patch_rate_cards-ratecardid) |
-| `archive(rateCardId: string): Promise<RateCard>` | Archives a specific rate card in Runn | [link](https://developer.runn.io/reference/patch_rate_cards-ratecardid) |
-| `unarchive(rateCardId: string): Promise<RateCard>` | Unarchives a specific rate card in Runn | [link](https://developer.runn.io/reference/patch_rate_cards-ratecardid) |
+| `fetchAll(): Promise<RateCard[]>` | Fetches all rate cards from Runn | [link](https://developer.runn.io/reference/get_rate-cards) |
+| `create(name, values): Promise<RateCard>` | Creates a new rate card in Runn | [link](https://developer.runn.io/reference/post_rate-cards) |
+| `delete(rateCardId: string): Promise<RateCard>` | Deletes a specific rate card in Runn | [link](https://developer.runn.io/reference/delete_rate-cards-ratecardid) |
 
 ### Roles
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
 | `fetchAll(): Promise<Role[]>` | Fetches all roles from Runn | [link](https://developer.runn.io/reference/get_roles) |
+| `getRoleId(roleName: string): Promise<number>` | Retrieves the ID of a role by name | [link](https://developer.runn.io/reference/get_roles) |
+| `create(roleName: string, values): Promise<Role>` | Creates a new role in Runn | [link](https://developer.runn.io/reference/post_roles) |
+| `update(roleId: string, values: object): Promise<Role>` | Updates a specific role in Runn | [link](https://developer.runn.io/reference/patch_roles-roleid) |
 
 ### Teams
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll(): Promise<TeamMember[]>` | Fetches all team members from Runn | [link](https://developer.runn.io/reference/get_team) |
+| `fetchAll({ modifiedAfter = null }): Promise<TeamMember[]>` | Fetches all team members from Runn | [link](https://developer.runn.io/reference/get_teams) |
+| `create(values): Promise<TeamMember>` | Creates a new team member in Runn | [link](https://developer.runn.io/reference/post_teams) |
 
 ### Users
 
-| Method Name | Description | Documentation Link |
+| Method Name | Description | Runn API Reference |
 | --- | --- | --- |
-| `fetchAll(): Promise<User[]>` | Fetches all users from Runn | [link](https://developer.runn.io/reference/get_users) |
+| `fetchAll({ modifiedAfter = null }): Promise<User[]>` | Fetches all users from Runn | [link](https://developer.runn.io/reference/get_users) |
 
 ## Development
 

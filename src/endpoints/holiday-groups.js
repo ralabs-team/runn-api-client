@@ -5,7 +5,7 @@ class RunnApiHolidayGroups {
 
   // fetches all holiday groups
   // https://developer.runn.io/reference/get_holiday-groups
-  async fetchRunnHolidayGroups() {
+  async fetchAll() {
     const values = await this.runnApi.executeRunnApiGET('/holiday-groups');
 
     this.runnApi.logger.log('debug', `Runn > Holiday Groups > fetched ${values.length} holiday groups`);
